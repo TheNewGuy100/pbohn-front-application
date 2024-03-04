@@ -20,7 +20,7 @@ export default class Footer extends React.Component {
 		return (
 			<Container sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: { xs: 4, sm: 8 }, py: { xs: 8, sm: 10 }, textAlign: { sm: "center", md: "left" } }}>
 				{/* TODO - fazer texto que se auto escreve em exibição */}
-				<Typography variant="h3">Me Encontre também em...</Typography>
+				<Typography variant="h3">Me encontre também em...</Typography>
 
 				<Stack direction="row" justifyContent="center" spacing={12} useFlexGap sx={{ color: "text.secondary" }}>
 					<IconButton target="_blank" color="inherit" href="https://github.com/TheNewGuy100" aria-label="GitHub" sx={{ alignSelf: "center" }}>

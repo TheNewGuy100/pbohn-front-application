@@ -1,246 +1,201 @@
 import * as React from 'react';
-import { PaletteMode } from '@mui/material';
+import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import AppBar from '@mui/material/AppBar';
+import MuiDrawer from '@mui/material/Drawer';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
-import MenuItem from '@mui/material/MenuItem';
-import Drawer from '@mui/material/Drawer';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import ToggleColorMode from '../toggleColorMode/toggleColorMode.component';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
 
-const logoStyle = {
-  width: '140px',
-  height: 'auto',
-  cursor: 'pointer',
-};
+const drawerWidth = 300;
 
-interface AppAppBarProps {
-  mode: PaletteMode;
-  toggleColorMode: () => void;
+const openedMixin = (theme: Theme): CSSObject => ({
+  width: drawerWidth,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: 'hidden',
+});
+
+const closedMixin = (theme: Theme): CSSObject => ({
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: 'hidden',
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up('sm')]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+});
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}));
+
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
 }
 
-function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
-  const [open, setOpen] = React.useState(false);
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})<AppBarProps>(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
 
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+    ...(open && {
+      ...openedMixin(theme),
+      '& .MuiDrawer-paper': openedMixin(theme),
+    }),
+    ...(!open && {
+      ...closedMixin(theme),
+      '& .MuiDrawer-paper': closedMixin(theme),
+    }),
+  }),
+);
+
+export default class MiniDrawer extends React.Component<{ theme: any, children: any }, { open: boolean }> {
+
+  constructor(props: { theme: any, children: any }) {
+    super(props)
+
+    this.state = {
+      open: false
+    };
+
+    this.handleDrawerOpen = this.handleDrawerOpen.bind(this)
+    this.handleDrawerClose = this.handleDrawerClose.bind(this)
+  }
+
+  handleDrawerOpen() {
+    this.setState({ open: true });
   };
 
-  const scrollToSection = (sectionId: string) => {
-    const sectionElement = document.getElementById(sectionId);
-    const offset = 128;
-    if (sectionElement) {
-      const targetScroll = sectionElement.offsetTop - offset;
-      sectionElement.scrollIntoView({ behavior: 'smooth' });
-      window.scrollTo({
-        top: targetScroll,
-        behavior: 'smooth',
-      });
-      setOpen(false);
-    }
+  handleDrawerClose() {
+    this.setState({ open: false });
   };
 
-  return (
-    <div>
-      <AppBar
-        position="fixed"
-        sx={{
-          boxShadow: 0,
-          bgcolor: 'transparent',
-          backgroundImage: 'none',
-          mt: 2,
-        }}
-      >
-        <Container maxWidth="lg">
-          <Toolbar
-            variant="regular"
-            sx={(theme) => ({
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              flexShrink: 0,
-              borderRadius: '999px',
-              bgcolor:
-                theme.palette.mode === 'light'
-                  ? 'rgba(255, 255, 255, 0.4)'
-                  : 'rgba(0, 0, 0, 0.4)',
-              backdropFilter: 'blur(24px)',
-              maxHeight: 40,
-              border: '1px solid',
-              borderColor: 'divider',
-              boxShadow:
-                theme.palette.mode === 'light'
-                  ? `0 0 1px rgba(85, 166, 246, 0.1), 1px 1.5px 2px -1px rgba(85, 166, 246, 0.15), 4px 4px 12px -2.5px rgba(85, 166, 246, 0.15)`
-                  : '0 0 1px rgba(2, 31, 59, 0.7), 1px 1.5px 2px -1px rgba(2, 31, 59, 0.65), 4px 4px 12px -2.5px rgba(2, 31, 59, 0.65)',
-            })}
-          >
-            <Box
+  render(): React.ReactNode {
+      return (
+        <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar position="fixed" open={this.state.open}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={this.handleDrawerOpen}
+              edge="start"
               sx={{
-                flexGrow: 1,
-                display: 'flex',
-                alignItems: 'center',
-                ml: '-18px',
-                px: 0,
+                marginRight: 5,
+                ...(this.state.open && { display: 'none' }),
               }}
             >
-              <img
-                src={
-                  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg'
-                }
-                style={logoStyle}
-                alt="logo of sitemark"
-              />
-              <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                <MenuItem
-                  onClick={() => scrollToSection('features')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Features
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('testimonials')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Testimonials
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('highlights')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Highlights
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('pricing')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Pricing
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('faq')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    FAQ
-                  </Typography>
-                </MenuItem>
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                display: { xs: 'none', md: 'flex' },
-                gap: 0.5,
-                alignItems: 'center',
-              }}
-            >
-              <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
-              <Button
-                color="primary"
-                variant="text"
-                size="small"
-                component="a"
-                href="/material-ui/getting-started/templates/sign-in/"
-                target="_blank"
-              >
-                Sign in
-              </Button>
-              <Button
-                color="primary"
-                variant="contained"
-                size="small"
-                component="a"
-                href="/material-ui/getting-started/templates/sign-up/"
-                target="_blank"
-              >
-                Sign up
-              </Button>
-            </Box>
-            <Box sx={{ display: { sm: '', md: 'none' } }}>
-              <Button
-                variant="text"
-                color="primary"
-                aria-label="menu"
-                onClick={toggleDrawer(true)}
-                sx={{ minWidth: '30px', p: '4px' }}
-              >
-                <MenuIcon />
-              </Button>
-              <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
-                <Box
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap component="div">
+              Mini variant drawer
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer variant="permanent" open={this.state.open}>
+          <DrawerHeader>
+            <IconButton onClick={this.handleDrawerClose}>
+              {this.props.theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <List>
+            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+              <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
                   sx={{
-                    minWidth: '60dvw',
-                    p: 2,
-                    backgroundColor: 'background.paper',
-                    flexGrow: 1,
+                    minHeight: 48,
+                    justifyContent: this.state.open ? 'initial' : 'center',
+                    px: 2.5,
                   }}
                 >
-                  <Box
+                  <ListItemIcon
                     sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'end',
-                      flexGrow: 1,
+                      minWidth: 0,
+                      mr: this.state.open ? 3 : 'auto',
+                      justifyContent: 'center',
                     }}
                   >
-                    <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
-                  </Box>
-                  <MenuItem onClick={() => scrollToSection('features')}>
-                    Features
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection('testimonials')}>
-                    Testimonials
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection('highlights')}>
-                    Highlights
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection('pricing')}>
-                    Pricing
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection('faq')}>FAQ</MenuItem>
-                  <Divider />
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      component="a"
-                      href="/material-ui/getting-started/templates/sign-up/"
-                      target="_blank"
-                      sx={{ width: '100%' }}
-                    >
-                      Sign up
-                    </Button>
-                  </MenuItem>
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="outlined"
-                      component="a"
-                      href="/material-ui/getting-started/templates/sign-in/"
-                      target="_blank"
-                      sx={{ width: '100%' }}
-                    >
-                      Sign in
-                    </Button>
-                  </MenuItem>
-                </Box>
-              </Drawer>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-    </div>
-  );
+                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} sx={{ opacity: this.state.open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            {['All mail', 'Trash', 'Spam'].map((text, index) => (
+              <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: this.state.open ? 'initial' : 'center',
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: this.state.open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} sx={{ opacity: this.state.open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+        <Box component="main" sx={{ flexGrow: 1 }}>
+          <DrawerHeader />
+          {this.props.children}
+        </Box>
+      </Box>
+    )
+  }
 }
-
-export default AppAppBar;

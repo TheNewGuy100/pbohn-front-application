@@ -42,55 +42,15 @@ export default function Hero() {
               textAlign: 'center',
             }}
           >
-            Our latest&nbsp;
-            <Typography
-              component="span"
-              variant="h1"
-              sx={{
-                color: (theme) =>
-                  theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
-              }}
-            >
-              products
-            </Typography>
+            Biography
           </Typography>
           <Typography variant="body1" textAlign="center" color="text.secondary">
             Explore our cutting-edge dashboard, delivering high-quality solutions
             tailored to your needs. <br />
             Elevate your experience with top-tier features and services.
           </Typography>
-          <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            alignSelf="center"
-            spacing={1}
-            useFlexGap
-            sx={{ pt: 2, width: { xs: '100%', sm: 'auto' } }}
-          >
-            <TextField
-              id="outlined-basic"
-              hiddenLabel
-              size="small"
-              variant="outlined"
-              aria-label="Enter your email address"
-              placeholder="Your email address"
-              inputProps={{
-                autocomplete: 'off',
-                ariaLabel: 'Enter your email address',
-              }}
-            />
-            <Button variant="contained" color="primary">
-              Start now
-            </Button>
-          </Stack>
-          <Typography variant="caption" textAlign="center" sx={{ opacity: 0.8 }}>
-            By clicking &quot;Start now&quot; you agree to our&nbsp;
-            <Link href="#" color="primary">
-              Terms & Conditions
-            </Link>
-            .
-          </Typography>
         </Stack>
-        <Box
+{/*         <Box
           id="image"
           sx={(theme) => ({
             mt: { xs: 8, sm: 10 },
@@ -113,7 +73,7 @@ export default function Hero() {
                 ? `0 0 12px 8px ${alpha('#9CCCFC', 0.2)}`
                 : `0 0 24px 12px ${alpha('#033363', 0.2)}`,
           })}
-        />
+        /> */}
       </Container>
     </Box>
   );

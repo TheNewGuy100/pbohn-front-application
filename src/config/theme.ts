@@ -149,7 +149,18 @@ const getDesignTokens = (mode: PaletteMode) => ({
     },
   },
   typography: {
-    fontFamily: ['"Inter", "sans-serif"'].join(','),
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
     h1: {
       fontSize: 60,
       fontWeight: 600,

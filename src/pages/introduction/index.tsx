@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { PaletteMode } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
@@ -12,11 +11,9 @@ import FAQ from '../../components/faq/faq.component';
 import Footer from '../../components/footer/footer.component';
 import Pricing from '../../components/pricing/pricing.component';
 import Highlights from '../../components/highlights/highlights.component';
-import AppAppBar from '../../components/navigation/navigation.component';
-import Testimonials from '../../components/testimonials/testimonials.component';
 import Features from '../../components/features/features.component';
-import LogoCollection from '../../components/logoCollection/logoCollection.component';
-import getTheme from '../../config/theme';
+import Referencias from '../../components/references/references.component';
+import { Container } from '@mui/material';
 
 const defaultTheme = createTheme({});
 
@@ -63,33 +60,27 @@ function ToggleCustomTheme({
   );
 }
 
-export default function LandingPage() {
-  const [mode, setMode] = React.useState<PaletteMode>('dark');
-  const LPtheme = createTheme(getTheme(mode));
+export default class IntroductionPage extends React.Component<{ theme: any }> {
 
-  const toggleColorMode = () => {
-    setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
-  };
-
-  return (
-    <ThemeProvider theme={LPtheme}>
-      <CssBaseline />
-      <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
-      <Hero />
-      <Box sx={{ bgcolor: 'background.default' }}>
-        <LogoCollection />
-        <Features />
-        <Divider />
-        <Testimonials />
-        <Divider />
-        <Highlights />
-        <Divider />
-        <Pricing />
-        <Divider />
-        <FAQ />
-        <Divider />
-        <Footer />
-      </Box>
-    </ThemeProvider>
-  );
+  render() {
+    return(
+      <React.Fragment>
+          <CssBaseline />
+          <Hero />
+          <Features />
+          <Referencias theme={this.props.theme} />
+          <Divider />
+          <Highlights />
+          <Divider />
+          <Pricing />
+          <Divider />
+          <FAQ />
+          <Divider />
+          <Footer />
+      </React.Fragment>
+    )
+  }
 }
+
+
+
