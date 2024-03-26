@@ -20,6 +20,7 @@ export default function FAQ() {
   return (
     <Container
       id="faq"
+      style={{ backgroundColor: '#06090a', margin: '0px', width: '100%', maxWidth: 'unset' }}
       sx={{
         pt: { xs: 4, sm: 12 },
         pb: { xs: 8, sm: 16 },

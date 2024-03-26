@@ -1,80 +1,57 @@
-import * as React from 'react';
-import { alpha } from '@mui/material';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import App from "../../pages/_app";
 
-export default function Hero() {
-  return (
-    <Box
-      id="hero"
-      sx={(theme) => ({
-        width: '100%',
-        backgroundImage:
-          theme.palette.mode === 'light'
-            ? 'linear-gradient(180deg, #CEE5FD, #FFF)'
-            : 'linear-gradient(#02294F, #090E10)',
-        backgroundSize: '100% 20%',
-        backgroundRepeat: 'no-repeat',
-      })}
-    >
-      <Container
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          pt: { xs: 14, sm: 20 },
-          pb: { xs: 8, sm: 12 },
-        }}
-      >
-        <Stack spacing={2} useFlexGap sx={{ width: { xs: '100%', sm: '70%' } }}>
-          <Typography
-            component="h1"
-            variant="h1"
-            sx={{
-              display: 'flex',
-              flexDirection: { xs: 'column', md: 'row' },
-              alignSelf: 'center',
-              textAlign: 'center',
-            }}
-          >
-            Biography
-          </Typography>
-          <Typography variant="body1" textAlign="center" color="text.secondary">
-            Explore our cutting-edge dashboard, delivering high-quality solutions
-            tailored to your needs. <br />
-            Elevate your experience with top-tier features and services.
-          </Typography>
-        </Stack>
-{/*         <Box
-          id="image"
-          sx={(theme) => ({
-            mt: { xs: 8, sm: 10 },
-            alignSelf: 'center',
-            height: { xs: 200, sm: 700 },
-            width: '100%',
-            backgroundImage:
-              theme.palette.mode === 'light'
-                ? 'url("/static/images/templates/templates-images/hero-light.png")'
-                : 'url("/static/images/templates/templates-images/hero-dark.png")',
-            backgroundSize: 'cover',
-            borderRadius: '10px',
-            outline: '1px solid',
-            outlineColor:
-              theme.palette.mode === 'light'
-                ? alpha('#BFCCD9', 0.5)
-                : alpha('#9CCCFC', 0.1),
-            boxShadow:
-              theme.palette.mode === 'light'
-                ? `0 0 12px 8px ${alpha('#9CCCFC', 0.2)}`
-                : `0 0 24px 12px ${alpha('#033363', 0.2)}`,
-          })}
-        /> */}
-      </Container>
-    </Box>
-  );
+export default class Hero extends React.Component<unknown, { particles: any[] }> {
+	constructor(props: unknown) {
+		super(props);
+
+		this.state = {
+			particles: [],
+		};
+	}
+
+	async componentDidMount(): Promise<void> {
+		let particles = [];
+
+		for (let i = 0; i <= 100; i++) {
+			console.log("running");
+
+			particles.push(<div className={App.style.circleContainer}></div>);
+		}
+
+		this.setState({ particles });
+	}
+
+	render() {
+		return (
+			<div>
+				<div style={{ height: "100vh", background: "linear-gradient(#000, #090e10)", overflowX: "hidden" }}>
+					{...this.state.particles.map((val: any, index: number) => val)}
+
+					<div
+						style={{
+							display: "flex",
+							flexDirection: "column",
+							width: "100%",
+              height: '100%',
+							justifyContent: "center",
+							alignItems: "center",
+              margin: 'auto 0px auto 0px',
+              transform: 'translateZ(0)'
+						}}
+					>
+						<div style={{ backgroundColor: "red", height: "20rem", width: "20rem", borderRadius: "20rem" }}></div>
+						<Typography component="h1" variant="h1" sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, alignSelf: "center", textAlign: "center" }}>
+							Pedro Henrique Bohn Costa
+						</Typography>
+						<Typography variant="body1" textAlign="center" color="text.secondary">
+							Uma central para todas as minhas experiências, projetos e conquistas 😉
+						</Typography>
+					</div>
+				</div>
+			</div>
+		);
+	}
 }

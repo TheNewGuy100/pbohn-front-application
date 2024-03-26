@@ -1,0 +1,36 @@
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fade-frames {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes scale-frames {
+    0% {
+        transform: scale3d(0.4, 0.4, 1);
+    }
+
+    50% {
+        transform: scale3d(2.2, 2.2, 1);
+    }
+
+    100% {
+        transform: scale3d(0.4, 0.4, 1);
+    }
+}
