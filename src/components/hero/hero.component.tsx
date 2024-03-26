@@ -35,11 +35,11 @@ export default class Hero extends React.Component<unknown, { particles: any[] }>
 							display: "flex",
 							flexDirection: "column",
 							width: "100%",
-              height: '100%',
+							height: "100%",
 							justifyContent: "center",
 							alignItems: "center",
-              margin: 'auto 0px auto 0px',
-              transform: 'translateZ(0)'
+							margin: "auto 0px auto 0px",
+							transform: "translateZ(0)",
 						}}
 					>
 						<div style={{ backgroundColor: "red", height: "20rem", width: "20rem", borderRadius: "20rem" }}></div>
