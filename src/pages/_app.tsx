@@ -1,40 +1,28 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import MiniDrawer from "../components/navigation/navigation.component";
-import React from "react";
+import NavigationDrawer from "../components/navigation/navigation.component";
+import React, { createContext, useState } from "react";
 import { PaletteMode } from "@mui/material";
 import getTheme from "../config/theme";
 import HeadComponent from "../components/head/head.component";
 
 // GLOBAL CSS
-import './_app.scss'
-import styles from './_app.module.scss'
+import "./_app.scss";
+import { ApplicationContext, IApplicationContext, defaultApplicationCTX } from "../config/application";
 
-interface IProps {
-	Component: any;
-	pageProps: any;
-}
+const App = ({ props, Component, pageProps }: { props: any; Component: any; pageProps: any }) => {
 
-interface IStates {
-	design: PaletteMode;
-}
+	const [applicationCTX, setApplicationCTX] = useState<IApplicationContext>(defaultApplicationCTX);
 
-export default class App extends React.Component<IProps, IStates> {
-	state: IStates = {
-		design: "dark",
-	};
+	return (
+		<ApplicationContext.Provider value={applicationCTX}>
+			<HeadComponent />
+			<ThemeProvider theme={createTheme(getTheme(applicationCTX.theme.scheme))}>
+				<NavigationDrawer>
+					<Component {...pageProps} />
+				</NavigationDrawer>
+			</ThemeProvider>
+		</ApplicationContext.Provider>
+	);
+};
 
-	public static style = styles;
-
-	LPtheme = createTheme(getTheme(this.state.design));
-
-	render() {
-		return (
-			<React.Fragment>
-				<HeadComponent />
-				<ThemeProvider theme={this.LPtheme}>
-					<MiniDrawer theme={this.LPtheme}>{<this.props.Component theme={this.LPtheme}></this.props.Component>}</MiniDrawer>
-				</ThemeProvider>
-			</React.Fragment>
-		);
-	}
-}
+export default App;

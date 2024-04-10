@@ -98,7 +98,7 @@ export default class Aprendizado extends React.Component<ReceivedProps, StatesMa
 									<Box sx={{ width: "100%", display: "flex", textAlign: "left", flexDirection: { xs: "column", md: "row" }, alignItems: { md: "center" }, gap: 2.5 }}>
 										<Box>{icon}</Box>
 										<div style={{ display: 'flex', width: '100%' }}>
-											<Typography color="text.primary" variant="body2" fontWeight="bold">
+											<Typography color="text.primary" variant="body2">
 												{title}
 											</Typography>
 											<ChevronRightRoundedIcon fontSize="small" sx={{ mt: "1px", ml: "2px" }} style={{ marginLeft: 'auto' }} />
